@@ -1,5 +1,6 @@
 ﻿using Gifter.Models;
 using Gifter.Utils;
+using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography;
 
 namespace Gifter.Repositories
@@ -156,10 +157,12 @@ namespace Gifter.Repositories
                        up.ImageUrl AS UserProfileImageUrl,
 
                         p.Id AS PostId, p.Title, p.Caption, p.DateCreated AS PostDateCreated, 
-                       p.ImageUrl AS PostImageUrl, p.UserProfileId AS PostUserProfileId
+                       p.ImageUrl AS PostImageUrl, p.UserProfileId AS PostUserProfileId,
 
+                        c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId
                         FROM UserProfile up
                         LEFT JOIN Post p ON p.UserProfileId = up.Id
+                        LEFT JOIN Comment c ON c.UserProfileId = up.Id
                         WHERE up.Id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -194,8 +197,20 @@ namespace Gifter.Repositories
                                 DateCreated = DbUtils.GetDateTime(reader, "PostDateCreated"),
                                 ImageUrl = DbUtils.GetString(reader, "PostImageUrl"),
                                 UserProfileId = id,
+                                Comments = new List<Comment>()
                             });
                         }
+                        if (DbUtils.IsNotDbNull(reader, "CommentId"))
+                        {
+                            userProfile.Comments.Add(new Comment()
+                            {
+                                Id = DbUtils.GetInt(reader, "CommentId"),
+                                Message = DbUtils.GetString(reader, "Message"),
+                                PostId = DbUtils.GetInt(reader, "PostId"),
+                                UserProfileId = id
+                            });
+                        }
+
                     }
 
                     reader.Close();

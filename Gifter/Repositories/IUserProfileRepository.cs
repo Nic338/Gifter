@@ -11,5 +11,6 @@ namespace Gifter.Repositories
         void Delete(int id);
         UserProfile GetUserWithPosts(int id);
 
+
     }
 }
