@@ -24,7 +24,7 @@ namespace Gifter.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var post = _postRepository.GetById(id);
+            Post post = _postRepository.GetById(id);
             if (post == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace Gifter.Controllers
         [HttpGet("GetWithComments")]
         public IActionResult GetWithComments()
         {
-            var posts = _postRepository.GetAllWithComments();
+            List<Post> posts = _postRepository.GetAllWithComments();
             return Ok(posts);
         }
         [HttpGet("GetWithComments/{id}")]
