@@ -16,3 +16,13 @@ export const addPost = (singlePost) => {
     body: JSON.stringify(singlePost),
   });
 };
+
+export const SearchPosts = (q, sortDescending) => {
+  return fetch(`${baseUrl}/search?q=${encodeURIComponent(q)}&sortDesc=${sortDescending || false}`)
+          .then((res) => res.json())         
+}
+
+export const getAllPostsWithComments = () => {
+  return fetch(`${baseUrl}/GetWithComments`) 
+    .then((res) => res.json())
+};

@@ -22,7 +22,7 @@ export const PostForm = () => {
         }
 
         return addPost(postToSendToAPI)
-                .then(() => {});
+                .then(window.location.reload());
     }
 
     return (

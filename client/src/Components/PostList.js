@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAllPosts } from "../APIManagers/PostManager";
+import { getAllPosts, getAllPostsWithComments } from "../APIManagers/PostManager";
 import { Post } from "./Post";
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
 
   const getPosts = () => {
-    getAllPosts().then(allPosts => setPosts(allPosts)); 
+    getAllPostsWithComments().then(allPosts => setPosts(allPosts)); 
   };
 
   useEffect(() => {
     getPosts();
-  }, []); 
+  }, []);
+
   return (
     <div className="container">
       <div className="row justify-content-center">
