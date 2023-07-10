@@ -189,10 +189,10 @@ namespace Gifter.Repositories
                        up.ImageUrl AS UserProfileImageUrl,
 
                        c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId
-                  FROM Post p
+                FROM Post p
                        LEFT JOIN UserProfile up ON p.UserProfileId = up.id
                        LEFT JOIN Comment c on c.PostId = p.id
-              ORDER BY p.DateCreated";
+                ORDER BY p.DateCreated";
 
                     var reader = cmd.ExecuteReader();
 

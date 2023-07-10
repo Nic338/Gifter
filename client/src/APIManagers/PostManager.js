@@ -26,3 +26,7 @@ export const getAllPostsWithComments = () => {
   return fetch(`${baseUrl}/GetWithComments`) 
     .then((res) => res.json())
 };
+
+export const getPost = (id) => {
+  return fetch(`${baseUrl}/GetWithComments/${id}`).then((res) => res.json());
+};

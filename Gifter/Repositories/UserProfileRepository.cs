@@ -187,22 +187,28 @@ namespace Gifter.Repositories
                             };
                         }
 
-                        if (DbUtils.IsNotDbNull(reader, "PostId"))
+                        var postId = DbUtils.GetInt(reader, "PostId");
+                        var existingPost = userProfile.Posts.FirstOrDefault(p => p.Id == postId);
+                        if (existingPost == null)
                         {
-                            userProfile.Posts.Add(new Post()
+                            existingPost = new Post()
                             {
-                                Id = DbUtils.GetInt(reader, "PostId"),
+                                Id = postId,
                                 Title = DbUtils.GetString(reader, "Title"),
                                 Caption = DbUtils.GetString(reader, "Caption"),
                                 DateCreated = DbUtils.GetDateTime(reader, "PostDateCreated"),
                                 ImageUrl = DbUtils.GetString(reader, "PostImageUrl"),
-                                UserProfileId = id,
+                                UserProfileId = userProfile.Id,
+
                                 Comments = new List<Comment>()
-                            });
+                            };
+
+                            userProfile.Posts.Add(existingPost);
                         }
+
                         if (DbUtils.IsNotDbNull(reader, "CommentId"))
                         {
-                            userProfile.Comments.Add(new Comment()
+                            existingPost.Comments.Add(new Comment()
                             {
                                 Id = DbUtils.GetInt(reader, "CommentId"),
                                 Message = DbUtils.GetString(reader, "Message"),

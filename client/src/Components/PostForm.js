@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { addPost } from "../APIManagers/PostManager";
+import { useNavigate } from "react-router-dom";
 
 export const PostForm = () => {
 
@@ -11,6 +12,8 @@ export const PostForm = () => {
         dateCreated: Date.now()
     })
 
+    const navigate = useNavigate();
+
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
         const postToSendToAPI = {
@@ -19,11 +22,11 @@ export const PostForm = () => {
             ImageUrl: newPost.imageUrl,
             DateCreated: new Date().toISOString(),
             UserProfileId: 1,
-        }
+        };
 
         return addPost(postToSendToAPI)
-                .then(window.location.reload());
-    }
+                .then(navigate("/"));
+    };
 
     return (
         <form className="post-form">

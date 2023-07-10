@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { getAllPosts, getAllPostsWithComments } from "../APIManagers/PostManager";
+import React, { useEffect, useState } from "react";
+import { getAllPostsWithComments } from "../APIManagers/PostManager";
 import { Post } from "./Post";
 
 const PostList = () => {
